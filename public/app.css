@@ -1,0 +1,44 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+html, body {
+	height: 100%;
+	font: 12px/14px Verdana;
+}
+#chat {
+	margin: 0 auto;
+	width: 100%;
+	max-width: 560px;
+	height: 450px;
+}
+#chat-text {
+	vertical-align: bottom;
+	overflow-x: hidden;
+	overflow-y: auto;
+	padding: 10px;
+	height: 430px;
+}
+#chat-text .time {
+	width: 60px;
+	padding-right: 5px;
+}
+#chat-text .user {
+	font-weight: bold;
+	color: green;
+	padding-right: 5px;
+}
+#chat-userlist {
+    width: 140px;
+    background-color: #eee;
+    vertical-align: top;
+    padding: 20px;
+    height: 450px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+#text {
+	box-sizing: border-box;
+	padding: 0 5px;
+}

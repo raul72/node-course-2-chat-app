@@ -3,9 +3,26 @@
 <head>
 	<meta charset="utf-8">
 	<title>chat app</title>
+	<link rel="stylesheet" type="text/css" href="app.css">
 </head>
 <body>
-Hello World
+<div id="status"></div>
+<table id="chat" cellpadding="0" cellspacing="0" boder="0">
+	<tr>
+		<td width="100%">
+			<div id="chat-text"></div>
+		</td>
+		<td>
+			<div id="chat-userlist"></div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" style="height: 20px;">
+			<input type="text" id="text" style="width: 100%">
+		</td>
+	</tr>
+</table>
+
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="app.js"></script>

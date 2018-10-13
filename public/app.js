@@ -4,14 +4,14 @@
   const chatText = document.getElementById('chat-text');
   const textInput = document.getElementById('text');
 
-  function padDateNumnber(number) {
+  function padDateNumber(number) {
     return [0].concat(number.toString().split('')).slice(-2).join('');
   }
 
   function getFormattedTime(time) {
-    let h = padDateNumnber(time.getHours());
-    let i = padDateNumnber(time.getMinutes());
-    let s = padDateNumnber(time.getSeconds());
+    let h = padDateNumber(time.getHours());
+    let i = padDateNumber(time.getMinutes());
+    let s = padDateNumber(time.getSeconds());
     return  `${h}:${i}:${s}`;
   }
 

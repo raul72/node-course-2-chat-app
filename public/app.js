@@ -68,15 +68,31 @@
     });
   }
 
+  let firstConnect = true;
   socket.on('connect', () => {
-    printSystemMessage('connected to the server');
+    if (!firstConnect) {
+      printSystemMessage('re-connected with the server');
+    } else {
+      firstConnect = false;
+    }
   });
+
+  socket.on('welcome', (welcome) => {
+    window.welcome = welcome;
+    if (welcome.messageHistory){
+      welcome.messageHistory.forEach(function(message) {
+        printMessage(message);
+      });
+    }
+    printSystemMessage('connected with the server');
+  });
+
+
   socket.on('disconnect', () => {
     printSystemMessage('disconnected from the server');
   });
 
   socket.on('userList', (users) => {
-    console.log(users);
     chatUserList.innerHTML = '';
 
     for (let i in users) {

@@ -15,6 +15,7 @@ const io = socketIO(server);
 app.use(express.static(publicPath));
 
 let users = [];
+let messageHistory = [];
 
 function sendUserListUpdate() {
   io.emit('userList', users);
@@ -26,6 +27,23 @@ io.on('connection', (socket) => {
   users.push(user);
 
   sendUserListUpdate();
+
+  const welcome = {
+    status: 1
+  };
+  if (config.messageHistory.enabled) {
+    if (config.messageHistory.maxAge) {
+      console.log('age',config.messageHistory.maxAge);
+      messageHistory = messageHistory.filter(function(message){
+        console.log('mage',(new Date() * 1) - message.time);
+        return (new Date() * 1) - message.time < config.messageHistory.maxAge * 1000;
+      });
+    }
+    welcome.messageHistory = messageHistory;
+  }
+  socket.emit('welcome', welcome);
+
+
   socket.broadcast.emit('message', {
     time: new Date().getTime(),
     type: 'userList',
@@ -35,6 +53,10 @@ io.on('connection', (socket) => {
   console.log('connected with a client');
 
   socket.on('message', (msg) => {
+    if (!msg) {
+      return;
+    }
+
     const message = {
       time: new Date() * 1,
       type: 'messsage',
@@ -42,6 +64,14 @@ io.on('connection', (socket) => {
       message: msg
     };
     io.emit('message', message);
+
+    if (config.messageHistory.enabled) {
+      messageHistory.push(message);
+      if (messageHistory.length > config.messageHistory.limit) {
+        messageHistory.shift();
+      }
+    }
+
   });
 
   socket.on('disconnect', () => {

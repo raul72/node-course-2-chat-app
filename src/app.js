@@ -1,7 +1,10 @@
-jQuery(function($){
-  var socket = io();
+const jQuery = require('jquery');
+const io = require('socket.io-client');
 
-  socket.on('connect', () => {
+jQuery(function($){
+  const socket = io();
+
+ socket.on('connect', () => {
     console.log('connected to the server');
   });
 

@@ -4,7 +4,7 @@ const io = require('socket.io-client');
 jQuery(function($){
   const socket = io();
 
- socket.on('connect', () => {
+  socket.on('connect', () => {
     console.log('connected to the server');
   });
 
@@ -30,7 +30,7 @@ jQuery(function($){
 
   const $form = $('#message-form');
   const $text = $('input[name="message"]', $form);
-  $form.on('submit', function(e){
+  $form.on('submit', function(){
     $text.attr('disabled', true);
     socket.emit('createMessage', {
       from: 'Bob',

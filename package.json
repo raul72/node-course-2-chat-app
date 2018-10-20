@@ -8,6 +8,7 @@
     "test": "jest server/**/*.test.js",
     "test-watch": "nodemon --exec 'npm test'",
     "build": "webpack --mode production",
+    "heroku-postbuild": "webpack -p",
     "dev": "webpack --watch --mode development --info-verbosity verbose"
   },
   "engines": {

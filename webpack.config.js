@@ -1,30 +1,72 @@
 const path = require('path');
-const webpack = require("webpack");
+/*
+FIXME: read about how dev/prod is actually supposed to be implemented:
+  - https://webpack.js.org/plugins/mini-css-extract-plugin/
+  - https://github.com/webpack-contrib/style-loader
+  - https://github.com/peerigon/extract-loader#examples
+  - https://webpack.js.org/concepts/hot-module-replacement/
+*/
 
-const webpack_rules = [];
-
-
-const webpackOption = {
-  entry: './src/app.js',
-  output: {
+module.exports = (env, argv) => {
+  const config = {};
+  config.entry = [
+    './src/app.js',
+    './src/index.html'
+  ];
+  config.output = {
     filename: 'app.js',
     path: path.resolve(__dirname, 'public')
-  },
-  module: {
-    rules: webpack_rules
-  }
-};
+  };
+  config.module = {
+    rules: []
+  };
 
-let babelLoader = {
-  test: /\.js$/,
-  exclude: /(node_modules|bower_components)/,
-  use: {
-    loader: "babel-loader",
-    options: {
-      presets: ["@babel/preset-env"]
-    }
-  }
-};
-webpack_rules.push(babelLoader);
+  const jsRules = {
+    test: /\.js$/,
+    exclude: /(node_modules|bower_components)/,
+    use: [
+      {
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env']
+        }
+      }
+    ]
+  };
+  const htmlRules = {
+    test: /\.html$/,
+    use: [
+      'file-loader?name=[name].[ext]',
+      'extract-loader',
+      {
+        loader: 'html-loader',
+        options: {
+          attrs: ['link:href'],
+          minimize: argv.mode === 'production',
+          removeComments: argv.mode === 'production',
+          collapseWhitespace:  argv.mode === 'production'
+        }
+      }
+    ]
+  };
+  const cssRules = {
+    test: /\.css$/,
+    use: [
+      'file-loader?name=[name].[ext]',
+      'extract-loader',
+      {
+        loader: 'css-loader',
+        options: {
+          // https://github.com/webpack-contrib/css-loader#options
+          sourceMap: false
+        }
+      }
+    ]
+  };
 
-module.exports = webpackOption;
+  config.module.rules.push(jsRules);
+  config.module.rules.push(htmlRules);
+  config.module.rules.push(cssRules);
+
+  return config;
+};

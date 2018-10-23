@@ -36,7 +36,12 @@ module.exports = (env, argv) => {
   const htmlRules = {
     test: /\.html$/,
     use: [
-      'file-loader?name=[name].[ext]',
+      {
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]'
+        }
+      },
       'extract-loader',
       {
         loader: 'html-loader',
@@ -52,7 +57,17 @@ module.exports = (env, argv) => {
   const cssRules = {
     test: /\.css$/,
     use: [
-      'file-loader?name=[name].[ext]',
+      {
+        loader: 'file-loader',
+        options: {
+          name (file) {
+            //if (argv.mode === 'production') {
+            //  return '[hash].[ext]';
+            //}
+            return '[name].[ext]?[hash]';
+          }
+        }
+      },
       'extract-loader',
       {
         loader: 'css-loader',

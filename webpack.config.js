@@ -1,4 +1,6 @@
 const path = require('path');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 /*
 FIXME: read about how dev/prod is actually supposed to be implemented:
   - https://webpack.js.org/plugins/mini-css-extract-plugin/
@@ -25,6 +27,15 @@ module.exports = (env, argv) => {
     'jquery': 'jQuery',
     'socket.io-client': 'io'
   };
+
+  config.plugins = [
+    // https://www.npmjs.com/package/webpack-bundle-analyzer
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      reportFilename: __dirname + '/report.html',
+      openAnalyzer: false,
+    })
+  ];
 
   const jsRules = {
     test: /\.js$/,

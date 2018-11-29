@@ -21,6 +21,11 @@ module.exports = (env, argv) => {
     rules: []
   };
 
+  config.externals = {
+    'jquery': 'jQuery',
+    'socket.io-client': 'io'
+  };
+
   const jsRules = {
     test: /\.js$/,
     exclude: /(node_modules|bower_components)/,

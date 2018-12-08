@@ -38,7 +38,7 @@ module.exports = (env, argv) => {
     }),
     new webpack.ContextReplacementPlugin(
       /moment[/\\]locale$/,
-      /et|ru/
+      /\/et|ru/
     )
   ];
 

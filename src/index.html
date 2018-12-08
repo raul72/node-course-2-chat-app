@@ -5,17 +5,26 @@
 	<title>chat app</title>
 	<link href="styles/app.css" type="text/css" rel="stylesheet">
 </head>
-<body>
+<body class="chat">
 	<!-- this is a comment-->
 
-	<ol id="messages"></ol>
+	<div class="chat__sidebar">
+		<h3>People</h3>
+		<div id="users"></div>
+	</div>
 
-	<form id="message-form">
-		<input name="message" type="text" placeholder="Message" />
-		<button>Send</button>
-	</form>
+	<div class="chat__main">
+		<ol id="messages" class="chat__messages"></ol>
 
-	<button id="send-location">Send Location</button>
+		<div class="chat__footer"">
+			<form id="message-form">
+				<input name="message" type="text" placeholder="Message" autofocus autocomplete="off" />
+				<button>Send</button>
+			</form>
+
+			<button id="send-location">Send Location</button>
+		</div>
+	</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>

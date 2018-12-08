@@ -1,5 +1,6 @@
 const path = require('path');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const webpack = require('webpack');
 
 /*
 FIXME: read about how dev/prod is actually supposed to be implemented:
@@ -34,7 +35,11 @@ module.exports = (env, argv) => {
       analyzerMode: 'static',
       reportFilename: __dirname + '/report.html',
       openAnalyzer: false,
-    })
+    }),
+    new webpack.ContextReplacementPlugin(
+      /moment[/\\]locale$/,
+      /et|ru/
+    )
   ];
 
   const jsRules = {

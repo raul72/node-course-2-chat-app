@@ -1,5 +1,6 @@
 const jQuery = require('jquery');
 const io = require('socket.io-client');
+const moment = require('moment');
 
 jQuery(function($){
   const socket = io();
@@ -14,20 +15,22 @@ jQuery(function($){
 
   const $messages = $('#messages');
   socket.on('newMessage', function (message) {
+    const formattedTime = moment(message.createdAt).format('HH:mm');
     $('<li/>')
-      .text(`${message.from}: ${message.text}`)
+      .text(`${message.from} ${formattedTime}: ${message.text}`)
       .appendTo($messages)
     ;
   });
 
   socket.on('newLocationMessage', function (message) {
+    const formattedTime = moment(message.createdAt).format('HH:mm');
     const $a = $('<a/>')
       .attr('href', message.url)
       .attr('target', '_blank')
       .text('My Current Location')
     ;
     const $li = $('<li/>')
-      .text(`${message.from}: `)
+      .text(`${message.from} ${formattedTime}: `)
     ;
     $li.append($a);
     $li.appendTo($messages);

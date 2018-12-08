@@ -27,6 +27,7 @@ module.exports = (env, argv) => {
   config.externals = {
     'jquery': 'jQuery',
     'socket.io-client': 'io',
+    'moment': 'moment',
     'mustache': 'Mustache',
   };
 
@@ -37,10 +38,12 @@ module.exports = (env, argv) => {
       reportFilename: __dirname + '/report.html',
       openAnalyzer: false,
     }),
+    /*
     new webpack.ContextReplacementPlugin(
       /moment[/\\]locale$/,
       /\/et|ru/
     )
+    */
   ];
 
   const jsRules = {

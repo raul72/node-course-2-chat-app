@@ -1,6 +1,7 @@
 const jQuery = require('jquery');
 const io = require('socket.io-client');
 const moment = require('moment');
+const Mustache = require('mustache');
 
 jQuery(function($){
   const socket = io();
@@ -15,25 +16,31 @@ jQuery(function($){
 
   const $messages = $('#messages');
   socket.on('newMessage', function (message) {
+    const template = $('#message-template').html();
     const formattedTime = moment(message.createdAt).format('HH:mm');
-    $('<li/>')
-      .text(`${message.from} ${formattedTime}: ${message.text}`)
-      .appendTo($messages)
-    ;
+    const html = Mustache.render(
+      template,
+      {
+        text: message.text,
+        from: message.from,
+        createdAt: formattedTime,
+      }
+    );
+    $messages.append(html);
   });
 
   socket.on('newLocationMessage', function (message) {
+    const template = $('#location-message-template').html();
     const formattedTime = moment(message.createdAt).format('HH:mm');
-    const $a = $('<a/>')
-      .attr('href', message.url)
-      .attr('target', '_blank')
-      .text('My Current Location')
-    ;
-    const $li = $('<li/>')
-      .text(`${message.from} ${formattedTime}: `)
-    ;
-    $li.append($a);
-    $li.appendTo($messages);
+    const html = Mustache.render(
+      template,
+      {
+        url: message.url,
+        from: message.from,
+        createdAt: formattedTime,
+      }
+    );
+    $messages.append(html);
   });
 
   const $form = $('#message-form');

@@ -26,7 +26,8 @@ module.exports = (env, argv) => {
 
   config.externals = {
     'jquery': 'jQuery',
-    'socket.io-client': 'io'
+    'socket.io-client': 'io',
+    'mustache': 'Mustache',
   };
 
   config.plugins = [

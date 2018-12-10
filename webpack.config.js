@@ -12,12 +12,18 @@ FIXME: read about how dev/prod is actually supposed to be implemented:
 
 module.exports = (env, argv) => {
   const config = {};
-  config.entry = [
-    './src/app.js',
-    './src/index.html'
-  ];
+  config.entry = {
+    app: [
+      './src/index.html',
+      './src/app.js',
+    ],
+    chat: [
+      './src/chat.html',
+      './src/chat.js',
+    ],
+  },
   config.output = {
-    filename: 'app.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'public')
   };
   config.module = {

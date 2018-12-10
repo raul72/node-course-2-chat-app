@@ -24,10 +24,27 @@ jQuery(function($){
 
   socket.on('connect', () => {
     console.log('connected to the server');
+    const params = $.deparam();
+    socket.emit('join', params, function(err){
+      if (err) {
+        alert(err);
+        window.location.href = '/';
+      } else {
+        console.log('no error');
+      }
+    });
   });
 
   socket.on('disconnect', () => {
     console.log('disconnected from the server');
+  });
+
+  socket.on('updateUserList', (users) => {
+    const $ol = $('<ol/>');
+    users.forEach((user) => {
+      $('<li/>').text(user).appendTo($ol);
+    });
+    $('#users').html($ol);
   });
 
   socket.on('newMessage', function (message) {

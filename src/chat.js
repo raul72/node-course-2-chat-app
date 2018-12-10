@@ -82,7 +82,6 @@ jQuery(function($){
   $form.on('submit', function(){
     $text.attr('disabled', true);
     socket.emit('createMessage', {
-      from: 'Bob',
       text: $text.val()
     }, function(payload){
       $text.val('');
